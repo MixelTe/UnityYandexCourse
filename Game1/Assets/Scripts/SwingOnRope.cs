@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[RequireComponent(typeof(FixedJoint2D), typeof(Rigidbody2D))]
+[RequireComponent(typeof(FixedJoint2D))]
 public class SwingOnRope : MonoBehaviour
 {
     [SerializeField]
@@ -14,30 +14,37 @@ public class SwingOnRope : MonoBehaviour
     private float _pushDelay = 0.5f;
 
     private FixedJoint2D _joint;
-    private Rigidbody2D _rigidbody;
     private float _lastPushTime = 0;
 
     private void Start()
     {
         _joint = GetComponent<FixedJoint2D>();
-        _rigidbody = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
     {
-        if (_joint.enabled && Time.timeSinceLevelLoad - _lastPushTime > _pushDelay)
+        var rope = _joint.connectedBody;
+        if (_joint.enabled && rope && Time.timeSinceLevelLoad - _lastPushTime > _pushDelay)
         {
-            var magnitude = _rigidbody.velocity.magnitude;
-            if (magnitude <= _minSpeedOfSwing)
+            var ropeSpeed = Mathf.Abs(rope.velocity.x);
+            if (ropeSpeed <= _minSpeedOfSwing)
 			{
                 _lastPushTime = Time.timeSinceLevelLoad;
-                var velocity = _rigidbody.velocity.normalized;
-                var pushForce = velocity * (_pushForce * -1);
-                var torqueForce = _pushForce * (velocity.x < 0 ? 1 : -1);
+                var ropeLocalPos = rope.gameObject.transform.localPosition;
+                var pushForce = _pushForce * Mathf.Sign(ropeLocalPos.x) * -1;
+                var pushVec = new Vector2(pushForce, 0);
 
-                _rigidbody.AddForce(pushForce, ForceMode2D.Impulse);
-                _rigidbody.AddTorque(torqueForce, ForceMode2D.Impulse);
-            }
+                SwingRope(rope, pushVec);
+			}
         }
+    }
+
+    private void SwingRope(Rigidbody2D rope, Vector2 force)
+	{
+        rope.AddRelativeForce(force, ForceMode2D.Impulse);
+
+        var joint = rope.GetComponent<FixedJoint2D>();
+        if (joint && joint.connectedBody)
+            SwingRope(joint.connectedBody, force / 2);
     }
 }
