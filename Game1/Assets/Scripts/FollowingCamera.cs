@@ -2,15 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 [RequireComponent(typeof(Camera))]
 public class FollowingCamera : MonoBehaviour
 {
-    [SerializeField]
-    private float _leftBoundary = 0;
-    [SerializeField]
-    private float _rightBoundary = 100;
-    [SerializeField]
-    private GameObject _followingObj;
+    [SerializeField] private float _leftBoundary = 0;
+    [SerializeField] private float _rightBoundary = 100;
+    [SerializeField] private GameObject _followingObj;
 
     private Camera _camera;
 

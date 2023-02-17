@@ -3,22 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[RequireComponent(typeof(FixedJoint2D))]
+[RequireComponent(typeof(HingeJoint2D), typeof(Rigidbody2D))]
 public class SwingOnRope : MonoBehaviour
 {
-    [SerializeField]
-    private float _minSpeedOfSwing = 1;
-    [SerializeField]
-    private float _pushForce = 2;
-    [SerializeField]
-    private float _pushDelay = 0.5f;
+    [SerializeField] private float _minSpeedOfSwing = 1;
+    [SerializeField] private float _pushForce = 2;
+    [SerializeField] private float _pushDelay = 0.5f;
 
-    private FixedJoint2D _joint;
+    private HingeJoint2D _joint;
+    private Rigidbody2D _rigidbody;
     private float _lastPushTime = 0;
 
     private void Start()
     {
-        _joint = GetComponent<FixedJoint2D>();
+        _joint = GetComponent<HingeJoint2D>();
+        _rigidbody = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
@@ -26,25 +25,16 @@ public class SwingOnRope : MonoBehaviour
         var rope = _joint.connectedBody;
         if (_joint.enabled && rope && Time.timeSinceLevelLoad - _lastPushTime > _pushDelay)
         {
-            var ropeSpeed = Mathf.Abs(rope.velocity.x);
-            if (ropeSpeed <= _minSpeedOfSwing)
+            var ropeSpeed = rope.velocity.x;
+            var swingDirection = Mathf.Sign(rope.gameObject.transform.localPosition.x);
+            if (ropeSpeed * swingDirection <= _minSpeedOfSwing)
 			{
                 _lastPushTime = Time.timeSinceLevelLoad;
-                var ropeLocalPos = rope.gameObject.transform.localPosition;
-                var pushForce = _pushForce * Mathf.Sign(ropeLocalPos.x) * -1;
+                var pushForce = _pushForce * swingDirection * -1;
                 var pushVec = new Vector2(pushForce, 0);
 
-                SwingRope(rope, pushVec);
+                _rigidbody.AddRelativeForce(pushVec, ForceMode2D.Force);
 			}
         }
-    }
-
-    private void SwingRope(Rigidbody2D rope, Vector2 force)
-	{
-        rope.AddRelativeForce(force, ForceMode2D.Impulse);
-
-        var joint = rope.GetComponent<FixedJoint2D>();
-        if (joint && joint.connectedBody)
-            SwingRope(joint.connectedBody, force / 2);
     }
 }
