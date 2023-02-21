@@ -9,6 +9,7 @@ public class Slide : MonoBehaviour
     [SerializeField] private Vector2 _velocity;
     [SerializeField] private LayerMask _layerMask;
     [SerializeField] private float _speed;
+    [SerializeField] private float _jumpForce;
 
     private Rigidbody2D _rb2d;
 
@@ -40,6 +41,11 @@ public class Slide : MonoBehaviour
         alongSurface.x *= Mathf.Sign(_groundNormal.x) * -1;
 
         _targetVelocity = alongSurface * _speed;
+
+        if (_grounded && Input.GetKeyDown(KeyCode.Space))
+        {
+            _velocity.y = _jumpForce;
+        }
     }
 
     void FixedUpdate()
