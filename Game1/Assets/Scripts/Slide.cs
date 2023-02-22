@@ -23,19 +23,19 @@ public class Slide : MonoBehaviour
     private const float MinMoveDistance = 0.001f;
     private const float ShellRadius = 0.01f;
 
-    void OnEnable()
+    private void OnEnable()
     {
         _rb2d = GetComponent<Rigidbody2D>();
     }
 
-    void Start()
+    private void Start()
     {
         _contactFilter.useTriggers = false;
         _contactFilter.SetLayerMask(_layerMask);
         _contactFilter.useLayerMask = true;
     }
 
-    void Update()
+    private void Update()
     {
         Vector2 alongSurface = Vector2.Perpendicular(_groundNormal);
         alongSurface.x *= Mathf.Sign(_groundNormal.x) * -1;
@@ -48,7 +48,7 @@ public class Slide : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         _velocity += _gravityModifier * Physics2D.gravity * Time.deltaTime;
         _velocity.x = _targetVelocity.x;
@@ -66,7 +66,7 @@ public class Slide : MonoBehaviour
         Movement(move, true);
     }
 
-    void Movement(Vector2 move, bool yMovement)
+    private void Movement(Vector2 move, bool yMovement)
     {
         float distance = move.magnitude;
 
