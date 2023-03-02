@@ -105,7 +105,7 @@ namespace Asteroids.Input
                     ""id"": ""ca7ac779-c41f-42ad-aeda-565f48879850"",
                     ""path"": ""1DAxis"",
                     ""interactions"": """",
-                    ""processors"": ""Invert"",
+                    ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Rotate"",
                     ""isComposite"": true,
