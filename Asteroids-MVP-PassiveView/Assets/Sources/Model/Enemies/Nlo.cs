@@ -6,12 +6,16 @@ namespace Asteroids.Model
     public class Nlo : Enemy
     {
         private readonly float _speed;
-        private readonly Transformable _target;
+        private Transformable _target;
 
-        public Nlo(Transformable target, Vector2 position, float speed) : base(position, 0)
+    public Nlo(Vector2 position, float speed) : base(position, 0)
         {
-            _target = target;
             _speed = speed;
+        }
+
+        public void SetTarget(Transformable target)
+		{
+            _target = target;
         }
 
         public override void Update(float deltaTime)
@@ -25,5 +29,10 @@ namespace Asteroids.Model
         {
             Rotate(Vector2.SignedAngle(Quaternion.Euler(0, 0, Rotation) * Vector3.up, (Position - point)));
         }
+    }
+    public enum NloTeam
+    {
+        First,
+        Second
     }
 }

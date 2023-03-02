@@ -9,7 +9,8 @@ public class PresentersFactory : MonoBehaviour
     [SerializeField] private Presenter _defaultGunBulletTemplate;
     [SerializeField] private Presenter _asteroidTemplate;
     [SerializeField] private Presenter _asteroidPartTemplate;
-    [SerializeField] private Presenter _nloTemplate;
+    [SerializeField] private Presenter _nlo1Template;
+    [SerializeField] private Presenter _nlo2Template;
 
     public void CreateBullet(Bullet bullet)
     {
@@ -25,9 +26,10 @@ public class PresentersFactory : MonoBehaviour
             CreatePresenter(_asteroidPartTemplate, asteroid.Model.CreatePart());
     }
 
-    public void CreateNlo(Nlo nlo)
+    public void CreateNlo(Nlo nlo, NloTeam team)
     {
-        CreatePresenter(_nloTemplate, nlo);
+        var template = team == NloTeam.First ? _nlo1Template : _nlo2Template;
+        CreatePresenter(template, nlo);
     }
 
     public void CreateAsteroid(Asteroid asteroid)

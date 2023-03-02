@@ -206,7 +206,7 @@ TextureImporter:
         width: 58
         height: 61
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -227,7 +227,7 @@ TextureImporter:
         width: 26
         height: 25
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -240,7 +240,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Nlo
+      name: Nlo1
       rect:
         serializedVersion: 2
         x: 232
@@ -248,7 +248,7 @@ TextureImporter:
         width: 16
         height: 23
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -256,6 +256,27 @@ TextureImporter:
       bones: []
       spriteID: 8d773547438815920800000000000000
       internalID: 2977310587539912664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Nlo2
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 164
+        width: 16
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1604d02d8f94614cac757d43f6878fc
+      internalID: 2095768638
       vertices: []
       indices: 
       edges: []
@@ -274,8 +295,9 @@ TextureImporter:
       PartOfAsteroid: -8758211774284209605
       Laser: -5522339636744722164
       Bullet: 7929229843044202141
-      Nlo: 2977310587539912664
+      Nlo2: 2095768638
       Asteroid: -1631521915477014264
+      Nlo1: 2095768638
       Ship1: -3688360664190313356
   spritePackingTag: 
   pSDRemoveMatte: 0

@@ -7,7 +7,7 @@ public class SpawnExample : MonoBehaviour
     [SerializeField] private Root _init;
 
     private int _index;
-    private float _secondsPerIndex = 1f;
+    private float _secondsPerIndex = 0.07f;
 
     private void Update()
     {
@@ -24,9 +24,14 @@ public class SpawnExample : MonoBehaviour
     {
         float chance = Random.Range(0, 100);
 
-        if (chance < 20)
+        if (chance < 95)
         {
-            _factory.CreateNlo(new Nlo(_init.Ship, GetRandomPositionOutsideScreen(), Config.NloSpeed));
+            var nlo1 = new Nlo(GetRandomPositionOutsideScreen(), Config.NloSpeed);
+            var nlo2 = new Nlo(GetRandomPositionOutsideScreen(), Config.NloSpeed);
+            nlo1.SetTarget(nlo2);
+            nlo2.SetTarget(nlo1);
+            _factory.CreateNlo(nlo1, NloTeam.First);
+            _factory.CreateNlo(nlo2, NloTeam.Second);
         }
         else
         {
