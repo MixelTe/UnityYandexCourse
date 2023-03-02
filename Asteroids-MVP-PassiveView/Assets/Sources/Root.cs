@@ -21,7 +21,11 @@ public class Root : MonoBehaviour
 
     public void DisableShip()
     {
-        _shipInputRouter.OnDisable();
+        _shipModel.Damage();
+        if (_shipModel.IsAlive())
+		{
+            _shipInputRouter.OnDisable();
+		}
     }
 
     private void Awake()

@@ -13,6 +13,7 @@ namespace Asteroids.Model
         private readonly float _degreesPerSecond = 180;
 
         public Vector2 Acceleration { get; private set; }
+        public int Health { get; private set; } = Config.ShipMaxHealth;
 
         public void Accelerate(float deltaTime)
         {
@@ -38,6 +39,19 @@ namespace Asteroids.Model
         public void Update(float deltaTime)
         {
             Move(Acceleration);
+        }
+
+        public void Damage() => Damage(1);
+        public void Damage(int damage)
+        {
+            if (Health < damage)
+                throw new InvalidOperationException(nameof(damage));
+            Health -= damage;
+        }
+
+        public bool IsAlive()
+        {
+            return Health <= 0;
         }
 
         private void Move(Vector2 delta)
