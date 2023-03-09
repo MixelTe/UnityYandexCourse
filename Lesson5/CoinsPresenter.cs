@@ -3,9 +3,9 @@ using UnityEngine.UI;
 
 public class CoinsPresenter : MonoBehaviour
 {
-	[SerializeField] private CoinsModel _coins;
 	[SerializeField] private Text _render;
 	[SerializeField] private Animator _animator;
+	[Inject] private CoinsModel _coins;
 
 	private void OnEnable()
 	{

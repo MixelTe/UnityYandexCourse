@@ -6,7 +6,10 @@ public class CoinsModel : MonoBehaviour
 	public event Action Changed;
 	private int Amount { get; private set; }
 
-	public CoinsModel(int amount) => Amount = amount;
+	public CoinsModel([Inject] DataSaver dataSaver)
+	{
+		Amount = dataSaver.GetCoins();
+	}
 
 	private void OnTriggerEnter(Collider other)
 	{
