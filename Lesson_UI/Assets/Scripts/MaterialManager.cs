@@ -5,10 +5,11 @@ using UnityEngine;
 public class MaterialManager : MonoBehaviour
 {
 
-    [SerializeField] private Renderer _renderer;
+    [SerializeField] private Material _material;
 
-    public void SetMaterial(Material material) {
-        _renderer.material = material;
+    public void SetColor(Color color)
+    {
+        _material.color = color;
     }
 
 }
