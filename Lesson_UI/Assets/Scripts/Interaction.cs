@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Interaction : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class Interaction : MonoBehaviour
 	void Update()
 	{
 
-		if (Input.GetMouseButtonDown(0))
+		if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
 		{
 			Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 			if (Physics.Raycast(ray, out RaycastHit hit))
