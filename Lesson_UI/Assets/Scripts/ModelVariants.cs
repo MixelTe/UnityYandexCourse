@@ -34,5 +34,8 @@ public class ModelVariants : MonoBehaviour
         _currenSelected.SetActive(true);
     }
 
-
+    public Mesh GetCurrentMesh()
+	{
+        return _currenSelected.GetComponent<MeshFilter>().mesh;
+    }
 }

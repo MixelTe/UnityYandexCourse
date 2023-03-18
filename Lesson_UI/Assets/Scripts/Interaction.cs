@@ -10,18 +10,29 @@ public class Interaction : MonoBehaviour
 
 	void Update()
 	{
+		if (EventSystem.current.IsPointerOverGameObject()) return;
+		
+		Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+		if (!Physics.Raycast(ray, out RaycastHit hit)) return;
 
-		if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+		if (hit.collider.TryGetComponent(out IHoverable hoverable))
 		{
-			Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
-			if (Physics.Raycast(ray, out RaycastHit hit))
-			{
-				if (hit.collider.TryGetComponent(out Clickable clickable))
-				{
-					clickable.Hit();
-				}
-			}
+			hoverable.Hover();
 		}
-
+		
+		if (Input.GetMouseButtonDown(0) && 
+			hit.collider.TryGetComponent(out IClickable clickable))
+		{
+			clickable.Hit();
+		}
 	}
+}
+public interface IClickable
+{
+	public void Hit();
+}
+
+public interface IHoverable
+{
+	public void Hover();
 }

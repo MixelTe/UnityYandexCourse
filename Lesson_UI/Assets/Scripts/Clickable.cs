@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class Clickable : MonoBehaviour
+public class Clickable : MonoBehaviour, IClickable
 {
 
     [SerializeField] private AnimationCurve _scaleCurve;
@@ -18,7 +18,7 @@ public class Clickable : MonoBehaviour
     {
         HitEffect hitEffect = Instantiate(_hitEffectPrefab, transform.position, Quaternion.identity);
         hitEffect.Init(_coinsPerClick);
-        _resources.CollectCoins(_coinsPerClick, transform.position);
+        _resources.HitCube(_coinsPerClick, transform.position);
         StartCoroutine(HitAnimation());
     }
 

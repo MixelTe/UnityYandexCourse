@@ -28,5 +28,4 @@ public class FlyingCoin : MonoBehaviour
         }
         Destroy(gameObject);
     }
-
 }

@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public class Resources : MonoBehaviour
 {
@@ -12,10 +10,16 @@ public class Resources : MonoBehaviour
 
     public event Action<int> OnChangeCoins;
     public event Action<Vector3> OnCollectCoins;
+    public event Action<int, Vector3> OnHitCube;
 
     private void Start()
     {
         OnChangeCoins?.Invoke(Coins);
+    }
+
+    public void HitCube(int value, Vector3 worldPosition)
+    {
+        OnHitCube.Invoke(value, worldPosition);
     }
 
     public void CollectCoins(int value, Vector3 worldPosition) {
