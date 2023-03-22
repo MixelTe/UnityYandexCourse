@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class Meteor : Enemy
 {
+	[SerializeField] private SpriteRenderer _renderer;
+	[SerializeField] private Sprite[] _variants;
 	[SerializeField] private Vector2 _speed;
 	[SerializeField] private Vector2 _rotationSpeed;
 	private float _curRotationSpeed;
 
 	private void Start()
 	{
+		_renderer.sprite = _variants.Random();
 		_curSpeed = Random.Range(_speed.x, _speed.y);
 		_curRotationSpeed = Random.Range(_rotationSpeed.x, _rotationSpeed.y) * Mathf.Deg2Rad;
 		var target = GameField.RandomPosInside();

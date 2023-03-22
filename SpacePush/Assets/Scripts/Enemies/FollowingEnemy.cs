@@ -18,7 +18,7 @@ public class FollowingEnemy : Enemy
 		_allies.Add(this);
 		var d = DistanceToPlayer();
 		_curSpeed = _speed;
-		_curRotation = Mathf.Atan2(d.y, d.x);
+		_curRotation = Utils.Atan2(d);
 	}
 
 	private void Update()
@@ -38,7 +38,7 @@ public class FollowingEnemy : Enemy
 
 	private void RotateToPlayer(Vector2 distance)
 	{
-		var targetRotation = Mathf.Atan2(distance.y, distance.x);
+		var targetRotation = Utils.Atan2(distance);
 
 		var targetRotationLooped = Mathf.PI * 2 + targetRotation;
 		var d1 = targetRotation - _curRotation;
