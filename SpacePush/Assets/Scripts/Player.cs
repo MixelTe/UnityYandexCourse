@@ -10,10 +10,16 @@ public class Player : Movable
 	public PlayerState State { get; private set; } = PlayerState.Idle;
 	public float PushDelay { get => _pushDelay; }
 
-	private void Start()
+	private void OnEnable()
 	{
 		GameManager.Ins.PlayerInput.OnSwipe += OnSwipe;
         GameManager.Ins.PlayerInput.OnSwiping += OnSwiping;
+	}
+
+	private void OnDisable()
+	{
+		GameManager.Ins.PlayerInput.OnSwipe -= OnSwipe;
+		GameManager.Ins.PlayerInput.OnSwiping -= OnSwiping;
 	}
 
 	private void Update()
@@ -43,7 +49,7 @@ public class Player : Movable
 		yield return new WaitForSeconds(_pushDelay);
 		State = PlayerState.Dash;
 		_curRotation = Utils.Atan2(-swipe);
-		_curSpeed = _pushSpeed;
+		_curSpeed = swipe.magnitude * _pushSpeed;
 	}
 }
 
