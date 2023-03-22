@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class FollowingEnemy : Enemy
 {
+	private static readonly List<FollowingEnemy> _allies = new();
 	[SerializeField] private float _speed;
 	[SerializeField] private float _rotationSpeed;
 	[SerializeField] private float _stopDistance;
+	[SerializeField] private float _partyDistance;
+	[SerializeField] private float _partyStrongDistance;
+	[SerializeField] private float _partyAvoidForce;
+	[SerializeField] private float _partyAvoidForceStrong;
 
 	private void Start()
 	{
+		_allies.Add(this);
 		var d = DistanceToPlayer();
 		_curSpeed = _speed;
 		_curRotation = Mathf.Atan2(d.y, d.x);
@@ -21,7 +27,13 @@ public class FollowingEnemy : Enemy
 		if (distance.sqrMagnitude > _stopDistance * _stopDistance)
 			RotateToPlayer(distance);
 
+		AvoidAllies();
 		Move();
+	}
+
+	private void OnDestroy()
+	{
+		_allies.Remove(this);
 	}
 
 	private void RotateToPlayer(Vector2 distance)
@@ -59,5 +71,27 @@ public class FollowingEnemy : Enemy
 		if (Mathf.Abs(dxLoop1) < Mathf.Abs(dx)) return dxLoop1;
 		if (Mathf.Abs(dxLoop2) < Mathf.Abs(dx)) return dxLoop2;
 		return dx;
+	}
+
+	private void AvoidAllies()
+	{
+		var boundary = GameField.GetBoundary();
+		var partyDistanceSqr = _partyDistance * _partyDistance;
+		var partyMinDistanceSqr = _partyStrongDistance * _partyStrongDistance;
+		foreach (var ally in _allies)
+		{
+			var dx = GetMinLoopDistance(transform.position.x, ally.transform.position.x, boundary.width);
+			var dy = GetMinLoopDistance(transform.position.y, ally.transform.position.y, boundary.height);
+			var d = new Vector3(-dx, -dy);
+			if (d.sqrMagnitude < partyMinDistanceSqr)
+			{
+				transform.position += d.normalized * _partyAvoidForceStrong;
+			}
+			else if (d.sqrMagnitude < partyDistanceSqr)
+			{
+				var force = d.sqrMagnitude / partyDistanceSqr * _partyAvoidForce;
+				transform.position += d.normalized * force;
+			}
+		}
 	}
 }

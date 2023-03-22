@@ -130,6 +130,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _modelSize: 0.5
-  _speed: 0.05
+  _speed: 0.03
   _rotationSpeed: 5
   _stopDistance: 0.5
+  _partyDistance: 2
+  _partyStrongDistance: 1.2
+  _partyAvoidForce: 0.01
+  _partyAvoidForceStrong: 0.1

@@ -37,4 +37,34 @@ static public class GameField
 				Random.value < 0.5 ? boundary.xMin : boundary.xMax,
 				Random.Range(boundary.yMin, boundary.yMax));
 	}
+
+	public static Vector2 RandomPosOutside(Vector2 side)
+	{
+		var boundary = GetBoundary().Inflate(1);
+		
+		var x = Random.Range(boundary.xMin, boundary.xMax) * Mathf.Abs(side.x);
+		var y = Random.Range(boundary.yMin, boundary.yMax) * Mathf.Abs(side.y);
+
+		x += (boundary.center.x + boundary.width / 2 * side.x) * (1 - Mathf.Abs(side.x));
+		y += (boundary.center.y + boundary.width / 2 * side.y) * (1 - Mathf.Abs(side.y));
+
+		return new Vector2(x, y);
+	}
+
+	public static Vector2 RandomSide()
+	{
+		if (Random.value < 0.5)
+			return new Vector2(0, Random.value < 0.5 ? 1: -1);
+		else
+			return new Vector2(Random.value < 0.5 ? 1 : -1, 0);
+	}
+
+	public static Vector2 RandomPosInside()
+	{
+		var boundary = GetBoundary().Inflate(-1);
+		return new Vector2(
+			Random.Range(boundary.xMin, boundary.xMax),
+			Random.Range(boundary.yMin, boundary.yMax)
+		);
+	}
 }
