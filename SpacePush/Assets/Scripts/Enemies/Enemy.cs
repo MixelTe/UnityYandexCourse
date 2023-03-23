@@ -29,6 +29,7 @@ public class Enemy : Movable
 		if (_destructed) return;
 		if (collision.TryGetComponent<Player>(out var player))
 		{
+			GameManager.Ins.Camera.Shake();
 			Destruct(player);
 		}
 	}

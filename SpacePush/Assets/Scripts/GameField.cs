@@ -6,13 +6,7 @@ static public class GameField
 {
 	public static Rect GetBoundary()
 	{
-		var camera = GameManager.Ins.Camera;
-		var h = camera.orthographicSize;
-		var w = camera.aspect * h;
-		return new Rect(
-			camera.transform.position.x - w,
-			camera.transform.position.y - h,
-			w * 2, h * 2);
+		return GameManager.Ins.Camera.GetBoundary();
 	}
 
 	public static Vector2 LoopInBoundary(Vector2 pos, float inflateBoundary = 0)
@@ -45,9 +39,9 @@ static public class GameField
 	public static Vector2 RandomSide()
 	{
 		if (Random.value < 0.5)
-			return new Vector2(0, Random.value < 0.5 ? 1: -1);
+			return new Vector2(0, Utils.RandomSign());
 		else
-			return new Vector2(Random.value < 0.5 ? 1 : -1, 0);
+			return new Vector2(Utils.RandomSign(), 0);
 	}
 
 	public static Vector2 RandomPosInside()

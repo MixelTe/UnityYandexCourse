@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 	[HideInInspector] public static GameManager Ins;
 	public Player Player;
 	public PlayerInput PlayerInput;
-	public Camera Camera;
+	public CameraController Camera;
 
 	private void Awake()
 	{

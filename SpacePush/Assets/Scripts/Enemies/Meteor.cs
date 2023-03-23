@@ -5,23 +5,18 @@ using UnityEngine;
 public class Meteor : Enemy
 {
 	[SerializeField] private SpriteRenderer _renderer;
+	[SerializeField] private CircleCollider2D _collider2D;
 	[SerializeField] private Sprite[] _variants;
 	[SerializeField] private Vector2 _speed;
-	[SerializeField] private Vector2 _rotationSpeed;
-	private float _curRotationSpeed;
+	[SerializeField] private Vector2 _size;
 
 	private void Start()
 	{
+		_curSpeed = _speed.Random();
+		_curRotation = Utils.Atan2(GameField.RandomPosInside() - transform.position.ToVector2());
 		_renderer.sprite = _variants.Random();
-		_curSpeed = Random.Range(_speed.x, _speed.y);
-		_curRotationSpeed = Random.Range(_rotationSpeed.x, _rotationSpeed.y) * Mathf.Deg2Rad;
-		var target = GameField.RandomPosInside();
-		_curRotation = Mathf.Atan2(target.y - transform.position.y, target.x - transform.position.x);
-	}
-
-	private void Update()
-	{
-		_curRotation = (_curRotation + _curRotationSpeed) % (Mathf.PI * 2);
-		Move();
+		var size = _size.Random();
+		_renderer.transform.localScale = new Vector3(size, size, size);
+		_collider2D.radius = size / 2;
 	}
 }

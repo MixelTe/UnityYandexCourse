@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5118680092472081208}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.829393, y: -1.486197, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -49,12 +49,13 @@ MonoBehaviour:
   _modelSize: 0.5
   _explosionParticles: {fileID: 4015684812757089039, guid: c8a62c7646e28f14f921f2e66a818318, type: 3}
   _renderer: {fileID: 5173281884844129135}
+  _collider2D: {fileID: 4084582709401121920}
   _variants:
   - {fileID: 523575001, guid: 1cf4643222f360847af03da4e1286000, type: 3}
   - {fileID: -1748299132, guid: 1cf4643222f360847af03da4e1286000, type: 3}
   - {fileID: 517245454, guid: 1cf4643222f360847af03da4e1286000, type: 3}
   _speed: {x: 0.005, y: 0.01}
-  _rotationSpeed: {x: 0.02, y: 0.1}
+  _size: {x: 1.6, y: 2.2}
 --- !u!58 &4084582709401121920
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -97,7 +98,7 @@ Transform:
   m_GameObject: {fileID: 8827085388348166699}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6492994141392945909}

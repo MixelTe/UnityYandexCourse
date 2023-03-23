@@ -19,8 +19,28 @@ public static class Utils
 		return array[UnityEngine.Random.Range(0, array.Length)];
 	}
 
+	public static float Random(this Vector2 v)
+	{
+		return UnityEngine.Random.Range(v.x, v.y);
+	}
+
+	public static int RandomSign()
+	{
+		return UnityEngine.Random.value < 0.5 ? 1 : -1;
+	}
+
 	public static float Atan2(Vector2 v)
 	{
 		return Mathf.Atan2(v.y, v.x);
+	}
+
+	public static Vector3 ToVector3(this Vector2 v)
+	{
+		return new Vector3(v.y, v.x);
+	}
+
+	public static Vector2 ToVector2(this Vector3 v)
+	{
+		return new Vector2(v.y, v.x);
 	}
 }

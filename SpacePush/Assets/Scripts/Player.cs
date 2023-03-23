@@ -43,9 +43,12 @@ public class Player : Movable
 	private void OnSwiping(Vector2 d)
 	{
 		if (State != PlayerState.Idle) return;
-		if (d.magnitude < GameManager.Ins.PlayerInput.TapRadius) return;
+		var magnitude = d.magnitude;
+		if (magnitude < GameManager.Ins.PlayerInput.TapRadius) return;
 
 		_curRotation = Utils.Atan2(-d);
+		var shakeMul = Mathf.Min(magnitude / GameManager.Ins.PlayerInput.SwipeRadius, 1);
+		GameManager.Ins.Camera.Shake(0.25f * shakeMul, true);
 	}
 
 	private IEnumerator Push(Vector2 swipe)
@@ -53,6 +56,7 @@ public class Player : Movable
 		State = PlayerState.Charge;
 		yield return new WaitForSeconds(_pushDelay);
 		State = PlayerState.Dash;
+		GameManager.Ins.Camera.Shake();
 		_forceField.enabled = true;
 		_curRotation = Utils.Atan2(-swipe);
 		_curSpeed = swipe.magnitude * _pushSpeed;
