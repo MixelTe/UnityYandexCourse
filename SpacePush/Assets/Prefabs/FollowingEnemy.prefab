@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 6539884980263044453}
   - component: {fileID: 728582193562110633}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: FollowingEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -131,6 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _modelSize: 0.5
+  _explosionParticles: {fileID: 5181745394398952408, guid: 01e53829c695a8c479cb98d5f818bb2d, type: 3}
   _speed: 0.03
   _rotationSpeed: 5
   _stopDistance: 0.5

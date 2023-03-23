@@ -27,28 +27,19 @@ static public class GameField
 
 	public static Vector2 RandomPosOutside()
 	{
-		var boundary = GetBoundary().Inflate(1);
-		if (Random.value < 0.5)
-			return new Vector2(
-				Random.Range(boundary.xMin, boundary.xMax),
-				Random.value < 0.5 ? boundary.yMin : boundary.yMax);
-		else
-			return new Vector2(
-				Random.value < 0.5 ? boundary.xMin : boundary.xMax,
-				Random.Range(boundary.yMin, boundary.yMax));
+		return RandomPosOutside(RandomSide());
 	}
 
 	public static Vector2 RandomPosOutside(Vector2 side)
 	{
 		var boundary = GetBoundary().Inflate(1);
-		
-		var x = Random.Range(boundary.xMin, boundary.xMax) * Mathf.Abs(side.x);
-		var y = Random.Range(boundary.yMin, boundary.yMax) * Mathf.Abs(side.y);
-
-		x += (boundary.center.x + boundary.width / 2 * side.x) * (1 - Mathf.Abs(side.x));
-		y += (boundary.center.y + boundary.width / 2 * side.y) * (1 - Mathf.Abs(side.y));
-
-		return new Vector2(x, y);
+		return side.x == 0 ?
+			new Vector2(
+				Random.Range(boundary.xMin, boundary.xMax),
+				side.y < 0.5 ? boundary.yMin : boundary.yMax)
+		  : new Vector2(
+				side.x < 0.5 ? boundary.xMin : boundary.xMax,
+				Random.Range(boundary.yMin, boundary.yMax));
 	}
 
 	public static Vector2 RandomSide()

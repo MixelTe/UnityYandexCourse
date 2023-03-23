@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class Player : Movable
 {
+    [SerializeField] private Collider2D _forceField;
     [SerializeField] private float _pushSpeed;
-    [SerializeField] private float _pushDelay;
+	[SerializeField] private float _pushDelay;
     [SerializeField] private float _spaceDensity;
 	public PlayerState State { get; private set; } = PlayerState.Idle;
 	public float PushDelay { get => _pushDelay; }
 
 	private void OnEnable()
 	{
+		_forceField.enabled = false;
 		GameManager.Ins.PlayerInput.OnSwipe += OnSwipe;
         GameManager.Ins.PlayerInput.OnSwiping += OnSwiping;
 	}
@@ -26,7 +28,10 @@ public class Player : Movable
     {
 		_curSpeed = Mathf.Max(_curSpeed - _spaceDensity, 0);
 		if (_curSpeed == 0 && State == PlayerState.Dash)
+		{
 			State = PlayerState.Idle;
+			_forceField.enabled = false;
+		}
 		Move(true);
 	}
 
@@ -48,6 +53,7 @@ public class Player : Movable
 		State = PlayerState.Charge;
 		yield return new WaitForSeconds(_pushDelay);
 		State = PlayerState.Dash;
+		_forceField.enabled = true;
 		_curRotation = Utils.Atan2(-swipe);
 		_curSpeed = swipe.magnitude * _pushSpeed;
 	}

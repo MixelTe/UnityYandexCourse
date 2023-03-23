@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _modelSize: 0.5
+  _explosionParticles: {fileID: 4015684812757089039, guid: c8a62c7646e28f14f921f2e66a818318, type: 3}
   _renderer: {fileID: 5173281884844129135}
   _variants:
   - {fileID: 523575001, guid: 1cf4643222f360847af03da4e1286000, type: 3}

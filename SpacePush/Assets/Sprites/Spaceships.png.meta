@@ -209,6 +209,69 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Spaceships_Enemy1_Part1
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 112
+        width: 93
+        height: 215
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a18392043f0f444ebbe022212841d50
+      internalID: -2056476077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spaceships_Enemy1_Part2
+      rect:
+        serializedVersion: 2
+        x: 417
+        y: 111
+        width: 88
+        height: 217
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b656dbe892b018c498eb9a1ca77cb3a8
+      internalID: 2074889249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spaceships_Enemy1_Part3
+      rect:
+        serializedVersion: 2
+        x: 316
+        y: 140
+        width: 100
+        height: 226
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b625382b90e244448be78f8f4451a948
+      internalID: -1586294694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -222,8 +285,11 @@ TextureImporter:
     nameFileIdTable:
       Spaceship_Enemy2: 480046503
       Spaceship_Small2: -131934978
+      Spaceships_Enemy1_Part2: 2074889249
+      Spaceships_Enemy1_Part3: -1586294694
       Spaceship_Enemy1: 571189397
       Spaceship_Small1: 70061962
+      Spaceships_Enemy1_Part1: -2056476077
       Spaceship_Player: 183417719
   spritePackingTag: 
   pSDRemoveMatte: 0
