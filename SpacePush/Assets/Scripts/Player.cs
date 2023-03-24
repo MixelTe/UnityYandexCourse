@@ -6,6 +6,7 @@ public class Player : Movable
 {
     [SerializeField] private Collider2D _forceField;
     [SerializeField] private SpriteRenderer _renderer;
+	[SerializeField] private ParticleSystem _explosionParticles;
 	[Header("Movement")]
 	[SerializeField] private float _pushSpeed;
 	[SerializeField] private float _pushDelay;
@@ -94,6 +95,14 @@ public class Player : Movable
 			_health--;
 			GameManager.Ins.StatsDisplay.UpdateHealth((float)_health / _maxHealth);
 			StartCoroutine(Blink());
+
+			if (_health <= 0)
+			{
+				_health = 0;
+				Instantiate(_explosionParticles, transform.position, Quaternion.identity);
+				gameObject.SetActive(false);
+				GameManager.Ins.EndGame();
+			}
 		}
 	}
 

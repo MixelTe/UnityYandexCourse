@@ -218,7 +218,7 @@ TextureImporter:
         width: 93
         height: 215
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -239,7 +239,7 @@ TextureImporter:
         width: 88
         height: 217
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -260,7 +260,7 @@ TextureImporter:
         width: 100
         height: 226
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -268,6 +268,69 @@ TextureImporter:
       bones: []
       spriteID: b625382b90e244448be78f8f4451a948
       internalID: -1586294694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spaceship_Player_Part1
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 503
+        width: 294
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0d7601c2468db54f80f0555893eaf5a
+      internalID: 881653549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spaceship_Player_Part2
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 388
+        width: 357
+        height: 255
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1074cf15df4e7dd4aba32163c673cacc
+      internalID: 424752622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Spaceship_Player_Part3
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 387
+        width: 304
+        height: 153
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1944023e943136447991d421c914dcaf
+      internalID: 1591124971
       vertices: []
       indices: 
       edges: []
@@ -289,8 +352,11 @@ TextureImporter:
       Spaceships_Enemy1_Part3: -1586294694
       Spaceship_Enemy1: 571189397
       Spaceship_Small1: 70061962
+      Spaceship_Player_Part3: 1591124971
       Spaceships_Enemy1_Part1: -2056476077
       Spaceship_Player: 183417719
+      Spaceship_Player_Part1: 881653549
+      Spaceship_Player_Part2: 424752622
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

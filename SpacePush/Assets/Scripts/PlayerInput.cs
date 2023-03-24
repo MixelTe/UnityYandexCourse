@@ -17,6 +17,8 @@ public class PlayerInput : MonoBehaviour
 
 	public void Update()
     {
+        if (!GameManager.Ins.GameRunning) return;
+
         if (Input.GetMouseButtonDown(0))
         {
             _touchStart = Input.mousePosition;

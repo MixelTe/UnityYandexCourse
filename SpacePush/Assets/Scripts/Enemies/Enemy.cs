@@ -19,11 +19,15 @@ public class Enemy : Movable
 		if (!_enteredField)
 			_enteredField = GameField.GetBoundary().Contains(transform.position);
 
+		if (!GameManager.Ins.GameRunning)
+			Destruct();
+
 		Move(_enteredField);
 	}
 
-	internal void Destruct(Player player)
+	internal void Destruct()
 	{
+		if (_destructed) return;
 		_destructed = true;
 		GameManager.Ins.Score.AddScore(_exp);
 		if (_explosionParticles)
@@ -37,7 +41,7 @@ public class Enemy : Movable
 		if (collision.TryGetComponent<Player>(out var player))
 		{
 			GameManager.Ins.Camera.Shake();
-			Destruct(player);
+			Destruct();
 		}
 	}
 }

@@ -22,6 +22,8 @@ public class Spawner : MonoBehaviour
 
     void Update()
     {
+        if (!GameManager.Ins.GameRunning) return;
+
         _timeFromLastMeteorSpawn += Time.deltaTime;
         if (_timeFromLastMeteorSpawn > _meteorSpawnRate)
 		{
