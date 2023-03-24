@@ -52,7 +52,7 @@ public class FollowingEnemy : Enemy
 		var d2 = targetRotationLooped - _curRotation;
 		var d = Mathf.Abs(d1) < Mathf.Abs(d2) ? d1 : d2;
 
-		var rotationSpeed = _rotationSpeed * Mathf.Deg2Rad;
+		var rotationSpeed = _rotationSpeed * Mathf.Deg2Rad * Time.deltaTime;
 		_curRotation += Mathf.Clamp(d, -rotationSpeed, rotationSpeed);
 	}
 

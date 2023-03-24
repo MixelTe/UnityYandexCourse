@@ -9,29 +9,35 @@ public class StatsDisplay : MonoBehaviour
 	[SerializeField, Rename("Panel")] private GameObject _ui;
 	[SerializeField] private PoppingText _score;
 	[SerializeField] private Slider _health;
-	[SerializeField] private Slider _dash;
-	[SerializeField] private Slider _splash;
+	[SerializeField] private PoppingSlider _dash;
+	[SerializeField] private PoppingSlider _splash;
 	[Header("Game Over screen")]
 	[SerializeField, Rename("Panel")] private GameObject _gameOverScreen;
 	[SerializeField, Rename("Score")] private PoppingText _finalScore;
 
-	public void UpdateScore(bool pop) => 
-		_score.UpdateText(GameManager.Ins.Score.Score, pop);
+	public void UpdateScore(bool pop) =>
+		_score.SetText(GameManager.Ins.Score.Score, pop);
 
 	public void UpdateHealth(float v) =>
 		_health.value = v;
+
+	public void PopDash() =>
+		_dash.Pop();
+
+	public void PopSplash() =>
+		_splash.Pop();
 
 	public void ShowGameOverScreen()
 	{
 		_ui.SetActive(false);
 		_gameOverScreen.SetActive(true);
-		_finalScore.UpdateText(GameManager.Ins.Score.Score);
+		_finalScore.SetText(GameManager.Ins.Score.Score, true);
 	}
 
 	private void Update()
 	{
 		var player = GameManager.Ins.Player;
-		_dash.value = player.DashCharges;
-		_splash.value = player.SplashCharges;
+		_dash.SetValue(player.DashCharges);
+		_splash.SetValue(player.SplashCharges);
 	}
 }

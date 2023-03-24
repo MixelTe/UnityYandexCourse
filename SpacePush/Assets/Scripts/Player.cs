@@ -19,6 +19,7 @@ public class Player : Movable
 	[SerializeField, Rename("Field")] private Collider2D _forceField;
 	[SerializeField, Rename("Max Charges")] private float _dashMaxCharges;
 	[SerializeField, Rename("Cooldown Time")] private float _dashCooldownTime;
+	[SerializeField, Rename("Uncharged Power Mul")] private float _dashUnchargedPowerMul;
 	[Header("Power wave")]
 	[SerializeField, Rename("Effect")] private ParticleSystem _powerWave;
     [SerializeField, Rename("Field")] private CircleCollider2D _waveField;
@@ -63,7 +64,7 @@ public class Player : Movable
 
 	private void Update()
     {
-		_curSpeed = Mathf.Max(_curSpeed - _spaceDensity, 0);
+		_curSpeed = Mathf.Max(_curSpeed - _spaceDensity * Time.deltaTime, 0);
 		_damageDelayCur = Mathf.Max(_damageDelayCur - Time.deltaTime, 0);
 		_dashCharges = Mathf.Min(_dashCharges + Time.deltaTime / _dashCooldownTime, _dashMaxCharges);
 		_splashCharges = Mathf.Min(_splashCharges + Time.deltaTime / _splashCooldownTime, _splashMaxCharges);
@@ -79,8 +80,7 @@ public class Player : Movable
 
 	private void OnSwipe(Vector2 swipe)
 	{
-        if (State != PlayerState.Idle) return;
-        if (_dashCharges < 1) return;
+		if (State != PlayerState.Idle && State != PlayerState.Dash) return;
 		StartCoroutine(Push(swipe));
 	}
 	private void OnSwiping(Vector2 d)
@@ -97,13 +97,20 @@ public class Player : Movable
 	private IEnumerator Push(Vector2 swipe)
 	{
 		State = PlayerState.Charge;
-		_dashCharges -= 1;
+		_dashCharges = Mathf.Max(_dashCharges - 1, 0);
 		yield return new WaitForSeconds(_pushDelay);
 		State = PlayerState.Dash;
 		GameManager.Ins.Camera.Shake();
 		_forceField.enabled = true;
 		_curRotation = Utils.Atan2(-swipe);
-		_curSpeed = swipe.magnitude * _pushSpeed;
+
+		var speedMul = 1f;
+		if (_dashCharges < 1)
+		{
+			GameManager.Ins.StatsDisplay.PopDash();
+			speedMul = _dashUnchargedPowerMul;
+		}
+		_curSpeed = swipe.magnitude * _pushSpeed * speedMul;
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)
@@ -146,7 +153,11 @@ public class Player : Movable
 	private void OnTap(Vector2 pos)
 	{
 		if (State != PlayerState.Idle && State != PlayerState.Dash) return;
-        if (_splashCharges < 1) return;
+		if (_splashCharges < 1) 
+		{
+			GameManager.Ins.StatsDisplay.PopSplash();
+			return;
+		}
 		StartCoroutine(Splash());
 	}
 
@@ -155,7 +166,7 @@ public class Player : Movable
 		State = PlayerState.Splash;
 		_splashCharges -= 1;
 		GameManager.Ins.Camera.Shake();
-		Instantiate(_powerWave, transform.position, Quaternion.identity);
+		Instantiate(_powerWave, transform.position, Quaternion.identity, transform);
 
 		_waveField.enabled = true;
 		for (float t = 0; t < 1; t += Time.deltaTime / _splashTime)

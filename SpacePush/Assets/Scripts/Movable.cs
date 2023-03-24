@@ -15,7 +15,8 @@ public class Movable : MonoBehaviour
 
 	internal void Move(bool loopInBoundary)
 	{
-		var movement = new Vector3(Mathf.Cos(_curRotation) * _curSpeed, Mathf.Sin(_curRotation) * _curSpeed);
+		var speed = _curSpeed * Time.deltaTime;
+		var movement = new Vector3(Mathf.Cos(_curRotation) * speed, Mathf.Sin(_curRotation) * speed);
 		var newPos = transform.position + movement;
 		var rotation = Quaternion.Euler(0, 0, _curRotation * Mathf.Rad2Deg);
 		

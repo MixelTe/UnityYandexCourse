@@ -55,7 +55,7 @@ MonoBehaviour:
   - {fileID: 523575001, guid: 1cf4643222f360847af03da4e1286000, type: 3}
   - {fileID: -1748299132, guid: 1cf4643222f360847af03da4e1286000, type: 3}
   - {fileID: 517245454, guid: 1cf4643222f360847af03da4e1286000, type: 3}
-  _speed: {x: 0.005, y: 0.01}
+  _speed: {x: 1, y: 2}
   _size: {x: 1.6, y: 2.2}
 --- !u!58 &4084582709401121920
 CircleCollider2D:
