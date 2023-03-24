@@ -9,6 +9,8 @@ public class StatsDisplay : MonoBehaviour
 	[SerializeField, Rename("Panel")] private GameObject _ui;
 	[SerializeField] private PoppingText _score;
 	[SerializeField] private Slider _health;
+	[SerializeField] private Slider _dash;
+	[SerializeField] private Slider _splash;
 	[Header("Game Over screen")]
 	[SerializeField, Rename("Panel")] private GameObject _gameOverScreen;
 	[SerializeField, Rename("Score")] private PoppingText _finalScore;
@@ -24,5 +26,12 @@ public class StatsDisplay : MonoBehaviour
 		_ui.SetActive(false);
 		_gameOverScreen.SetActive(true);
 		_finalScore.UpdateText(GameManager.Ins.Score.Score);
+	}
+
+	private void Update()
+	{
+		var player = GameManager.Ins.Player;
+		_dash.value = player.DashCharges;
+		_splash.value = player.SplashCharges;
 	}
 }

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Player : Movable
 {
-    [SerializeField] private Collider2D _forceField;
     [SerializeField] private SpriteRenderer _renderer;
 	[SerializeField] private ParticleSystem _explosionParticles;
 	[Header("Movement")]
@@ -16,34 +15,58 @@ public class Player : Movable
 	[SerializeField] private float _damageDelay;
 	[SerializeField] private float _damagePower;
 	[SerializeField] private float _blinkSpeed;
+	[Header("Dash")]
+	[SerializeField, Rename("Field")] private Collider2D _forceField;
+	[SerializeField, Rename("Max Charges")] private float _dashMaxCharges;
+	[SerializeField, Rename("Cooldown Time")] private float _dashCooldownTime;
+	[Header("Power wave")]
+	[SerializeField, Rename("Effect")] private ParticleSystem _powerWave;
+    [SerializeField, Rename("Field")] private CircleCollider2D _waveField;
+	[SerializeField, Rename("Time")] private float _splashTime;
+	[SerializeField, Rename("Start Radius")] private float _splashStartRadius;
+	[SerializeField, Rename("Radius")] private float _splashRadius;
+	[SerializeField, Rename("Max Charges")] private float _splashMaxCharges;
+	[SerializeField, Rename("Cooldown Time")] private float _splashCooldownTime;
+
 	public float PushDelay { get => _pushDelay; }
+	public float DashCharges { get => _dashCharges / _dashMaxCharges; }
+	public float SplashCharges { get => _splashCharges / _splashMaxCharges; }
 
 	public PlayerState State { get; private set; } = PlayerState.Idle;
 	private int _health;
 	private float _damageDelayCur;
+	private float _dashCharges;
+	private float _splashCharges;
 
 	private void Start()
 	{
 		_health = _maxHealth;
+		_dashCharges = _dashMaxCharges;
+		_splashCharges = _splashMaxCharges;
 	}
 
 	private void OnEnable()
 	{
 		_forceField.enabled = false;
+		_waveField.enabled = false;
 		GameManager.Ins.PlayerInput.OnSwipe += OnSwipe;
         GameManager.Ins.PlayerInput.OnSwiping += OnSwiping;
+		GameManager.Ins.PlayerInput.OnTap += OnTap;
 	}
 
 	private void OnDisable()
 	{
 		GameManager.Ins.PlayerInput.OnSwipe -= OnSwipe;
 		GameManager.Ins.PlayerInput.OnSwiping -= OnSwiping;
+		GameManager.Ins.PlayerInput.OnTap -= OnTap;
 	}
 
 	private void Update()
     {
 		_curSpeed = Mathf.Max(_curSpeed - _spaceDensity, 0);
 		_damageDelayCur = Mathf.Max(_damageDelayCur - Time.deltaTime, 0);
+		_dashCharges = Mathf.Min(_dashCharges + Time.deltaTime / _dashCooldownTime, _dashMaxCharges);
+		_splashCharges = Mathf.Min(_splashCharges + Time.deltaTime / _splashCooldownTime, _splashMaxCharges);
 
 		if (_curSpeed == 0 && State == PlayerState.Dash)
 		{
@@ -57,6 +80,7 @@ public class Player : Movable
 	private void OnSwipe(Vector2 swipe)
 	{
         if (State != PlayerState.Idle) return;
+        if (_dashCharges < 1) return;
 		StartCoroutine(Push(swipe));
 	}
 	private void OnSwiping(Vector2 d)
@@ -73,6 +97,7 @@ public class Player : Movable
 	private IEnumerator Push(Vector2 swipe)
 	{
 		State = PlayerState.Charge;
+		_dashCharges -= 1;
 		yield return new WaitForSeconds(_pushDelay);
 		State = PlayerState.Dash;
 		GameManager.Ins.Camera.Shake();
@@ -84,6 +109,7 @@ public class Player : Movable
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (State == PlayerState.Dash) return;
+		if (State == PlayerState.Splash) return;
 		if (collision.TryGetComponent<Enemy>(out var enemy))
 		{
 			_curSpeed = _damagePower;
@@ -116,11 +142,36 @@ public class Player : Movable
 		}
 		_renderer.color = Color.white;
 	}
+
+	private void OnTap(Vector2 pos)
+	{
+		if (State != PlayerState.Idle && State != PlayerState.Dash) return;
+        if (_splashCharges < 1) return;
+		StartCoroutine(Splash());
+	}
+
+	private IEnumerator Splash()
+	{
+		State = PlayerState.Splash;
+		_splashCharges -= 1;
+		GameManager.Ins.Camera.Shake();
+		Instantiate(_powerWave, transform.position, Quaternion.identity);
+
+		_waveField.enabled = true;
+		for (float t = 0; t < 1; t += Time.deltaTime / _splashTime)
+		{
+			_waveField.radius = Mathf.Lerp(_splashStartRadius, _splashRadius, t);
+			yield return null;
+		}
+		_waveField.enabled = false;
+		State = PlayerState.Idle;
+	}
 }
 
 public enum PlayerState
 {
 	Idle,
 	Charge,
-	Dash
+	Dash,
+	Splash
 }
