@@ -132,6 +132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _modelSize: 0.5
   _explosionParticles: {fileID: 5181745394398952408, guid: 01e53829c695a8c479cb98d5f818bb2d, type: 3}
+  _exp: 5
   _speed: 0.03
   _rotationSpeed: 5
   _stopDistance: 0.5

@@ -17,6 +17,6 @@ public class Meteor : Enemy
 		_renderer.sprite = _variants.Random();
 		var size = _size.Random();
 		_renderer.transform.localScale = new Vector3(size, size, size);
-		_collider2D.radius = size / 2;
+		_collider2D.radius = size / 3f;
 	}
 }

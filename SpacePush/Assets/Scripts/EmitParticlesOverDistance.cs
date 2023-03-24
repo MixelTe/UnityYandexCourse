@@ -11,7 +11,7 @@ public class EmitParticlesOverDistance : MonoBehaviour
     private ParticleSystem _particleSystem;
     private Vector3 _lastPos;
 
-    private void Start()
+    private void Awake()
     {
         _particleSystem = GetComponent<ParticleSystem>();
     }

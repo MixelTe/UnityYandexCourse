@@ -10,10 +10,10 @@ public class Movable : MonoBehaviour
 
 	private void Update()
 	{
-		Move();
+		Move(false);
 	}
 
-	internal void Move(bool loopInBoundary = false)
+	internal void Move(bool loopInBoundary)
 	{
 		var movement = new Vector3(Mathf.Cos(_curRotation) * _curSpeed, Mathf.Sin(_curRotation) * _curSpeed);
 		var newPos = transform.position + movement;

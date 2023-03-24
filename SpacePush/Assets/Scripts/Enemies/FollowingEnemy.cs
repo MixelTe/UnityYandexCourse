@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class FollowingEnemy : Enemy
 {
 	private static readonly List<FollowingEnemy> _allies = new();
+	private static bool _allAlliesEnteredField = false;
 	[SerializeField] private float _speed;
 	[SerializeField] private float _rotationSpeed;
 	[SerializeField] private float _stopDistance;
@@ -15,6 +17,7 @@ public class FollowingEnemy : Enemy
 
 	private void Start()
 	{
+		_allAlliesEnteredField = false;
 		_allies.Add(this);
 		var d = DistanceToPlayer();
 		_curSpeed = _speed;
@@ -23,6 +26,10 @@ public class FollowingEnemy : Enemy
 
 	private void Update()
 	{
+		if (!_allAlliesEnteredField && _allies[0] == this)
+		{
+			_allAlliesEnteredField = _allies.TrueForAll(el => el._enteredField);
+		}
 		var distance = DistanceToPlayer();
 		if (distance.sqrMagnitude > _stopDistance * _stopDistance)
 			RotateToPlayer(distance);
@@ -52,7 +59,7 @@ public class FollowingEnemy : Enemy
 	private Vector2 DistanceToPlayer()
 	{
 		var playerPos = GameManager.Ins.Player.transform.position;
-		if (!_enteredField)
+		if (!_allAlliesEnteredField)
 			return playerPos - transform.position;
 
 		var boundary = GameField.GetBoundary();

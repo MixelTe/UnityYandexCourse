@@ -5,11 +5,26 @@ using UnityEngine;
 public class Player : Movable
 {
     [SerializeField] private Collider2D _forceField;
-    [SerializeField] private float _pushSpeed;
+    [SerializeField] private SpriteRenderer _renderer;
+	[Header("Movement")]
+	[SerializeField] private float _pushSpeed;
 	[SerializeField] private float _pushDelay;
     [SerializeField] private float _spaceDensity;
-	public PlayerState State { get; private set; } = PlayerState.Idle;
+	[Header("Health")]
+	[SerializeField] private int _maxHealth;
+	[SerializeField] private float _damageDelay;
+	[SerializeField] private float _damagePower;
+	[SerializeField] private float _blinkSpeed;
 	public float PushDelay { get => _pushDelay; }
+
+	public PlayerState State { get; private set; } = PlayerState.Idle;
+	private int _health;
+	private float _damageDelayCur;
+
+	private void Start()
+	{
+		_health = _maxHealth;
+	}
 
 	private void OnEnable()
 	{
@@ -27,11 +42,14 @@ public class Player : Movable
 	private void Update()
     {
 		_curSpeed = Mathf.Max(_curSpeed - _spaceDensity, 0);
+		_damageDelayCur = Mathf.Max(_damageDelayCur - Time.deltaTime, 0);
+
 		if (_curSpeed == 0 && State == PlayerState.Dash)
 		{
 			State = PlayerState.Idle;
 			_forceField.enabled = false;
 		}
+
 		Move(true);
 	}
 
@@ -60,6 +78,34 @@ public class Player : Movable
 		_forceField.enabled = true;
 		_curRotation = Utils.Atan2(-swipe);
 		_curSpeed = swipe.magnitude * _pushSpeed;
+	}
+
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		if (State == PlayerState.Dash) return;
+		if (collision.TryGetComponent<Enemy>(out var enemy))
+		{
+			_curSpeed = _damagePower;
+			_curRotation = Utils.Atan2(transform.position - enemy.transform.position);
+			
+			if (_damageDelayCur > 0) return;
+
+			_damageDelayCur = _damageDelay;
+			_health--;
+			GameManager.Ins.StatsDisplay.UpdateHealth((float)_health / _maxHealth);
+			StartCoroutine(Blink());
+		}
+	}
+
+	private IEnumerator Blink()
+	{
+		for (float t = 0; t < 1; t += Time.deltaTime / _damageDelay)
+		{
+			var v = Mathf.Abs(Mathf.Sin(t * _blinkSpeed)) * 0.8f;
+			_renderer.color = Color.HSVToRGB(0, v, 1);
+			yield return null;
+		}
+		_renderer.color = Color.white;
 	}
 }
 

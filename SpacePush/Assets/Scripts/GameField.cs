@@ -46,7 +46,7 @@ static public class GameField
 
 	public static Vector2 RandomPosInside()
 	{
-		var boundary = GetBoundary().Inflate(-1);
+		var boundary = GetBoundary().Inflate(-2);
 		return new Vector2(
 			Random.Range(boundary.xMin, boundary.xMax),
 			Random.Range(boundary.yMin, boundary.yMax)

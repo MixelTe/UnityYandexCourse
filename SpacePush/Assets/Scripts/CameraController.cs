@@ -14,7 +14,7 @@ public class CameraController : MonoBehaviour
 	private float _shakeMagnitude;
 	private float _shakeTime;
 
-	private void Start()
+	private void Awake()
     {
         _camera = GetComponent<Camera>();
 		_pos = transform.position;

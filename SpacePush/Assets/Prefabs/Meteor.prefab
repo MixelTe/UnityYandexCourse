@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _modelSize: 0.5
   _explosionParticles: {fileID: 4015684812757089039, guid: c8a62c7646e28f14f921f2e66a818318, type: 3}
+  _exp: 1
   _renderer: {fileID: 5173281884844129135}
   _collider2D: {fileID: 4084582709401121920}
   _variants:
